@@ -1,5 +1,5 @@
 {
-  "name": "@ottofeller/epubjs-rn",
+  "name": "epubjs-rn",
   "version": "0.2.24",
   "repository": "https://github.com/ottofeller/epubjs-rn",
   "main": "./components/index.js",
