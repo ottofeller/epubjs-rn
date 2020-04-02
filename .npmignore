@@ -5,3 +5,4 @@ node_modules
 EpubReader
 .babelrc
 .babelrc.js
+package-lock.json
