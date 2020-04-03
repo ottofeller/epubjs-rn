@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, Dimensions, AppState } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  Dimensions,
+  AppState,
+  WebView
+} from 'react-native';
 
 import Orientation from '@lightbase/react-native-orientation';
+
 import RNFetchBlob from 'rn-fetch-blob';
+
 import AsyncStorage from '@react-native-community/async-storage';
 
 if (!global.Blob) {
@@ -18,7 +27,11 @@ if (!global.btoa) {
   global.btoa = require('base-64').encode;
 }
 
-import ePub from 'epubjs';
+import ePub, { Layout, EpubCFI } from 'epubjs';
+
+const core = require('epubjs/lib/utils/core');
+const Uri = require('epubjs/lib/utils/url');
+const Path = require('epubjs/lib/utils/path');
 
 import Rendition from './Rendition';
 
@@ -26,7 +39,7 @@ class Epub extends Component {
   constructor(props) {
     super(props);
 
-    const bounds = Dimensions.get('window');
+    var bounds = Dimensions.get('window');
 
     this.state = {
       toc: [],
@@ -60,6 +73,7 @@ class Epub extends Component {
         this.state.width > this.state.height ? 'LANDSCAPE' : 'PORTRAIT';
       this.setState({ orientation });
     }
+    // __DEV__ && console.log("inital orientation", orientation, this.state.width, this.state.height)
 
     if (this.props.src) {
       this._loadBook(this.props.src);
@@ -189,10 +203,30 @@ class Epub extends Component {
     });
 
     return this._openBook(bookUrl);
+
+    /*
+    var type = this.book.determineType(bookUrl);
+    var uri = new Uri(bookUrl);
+    if ((type === "directory") || (type === "opf")) {
+      return this._openBook(bookUrl);
+    } else {
+      return this.streamer.start()
+      .then((localOrigin) => {
+        this.setState({localOrigin})
+        return this.streamer.get(bookUrl);
+      })
+      .then((localUrl) => {
+        this.setState({localUrl})
+        return this._openBook(localUrl);
+      });
+    }
+    */
   }
 
   _openBook(bookUrl, useBase64) {
-    __DEV__ && console.log('open book: ', bookUrl);
+    __DEV__ && console.log('open book: ', bookUrl, useBase64);
+
+    var type = useBase64 ? 'base64' : null;
 
     if (!this.rendition) {
       this.needsOpen = [bookUrl, useBase64];
@@ -200,7 +234,7 @@ class Epub extends Component {
     }
 
     this.book.open(bookUrl).catch(err => {
-      __DEV__ && console.error(err);
+      console.error(err);
     });
 
     this.book.ready.then(() => {

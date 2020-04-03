@@ -34,7 +34,6 @@ const EMBEDDED_HTML = `
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -webkit-tap-highlight-color: transparent; /* For some Androids */
     }
-
     /* For iPhone X Notch */
     @media only screen
       and (min-device-width : 375px)
@@ -62,6 +61,7 @@ class Rendition extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+    console.log('Rendition', this.props.url);
 
     if (this.props.url) {
       this.load(this.props.url);
@@ -275,7 +275,7 @@ class Rendition extends Component {
   }
 
   sendToBridge(method, args, promiseId) {
-    const str = JSON.stringify({
+    var str = JSON.stringify({
       method: method,
       args: args,
       promise: promiseId
