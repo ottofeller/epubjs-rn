@@ -1,12 +1,8 @@
-import { AppState } from 'react-native';
-
 import StaticServer from 'react-native-static-server';
 
 import RNFetchBlob from 'rn-fetch-blob';
 
-import { zip, unzip, unzipAssets, subscribe } from 'react-native-zip-archive';
-
-import { join } from 'path';
+import { zip, unzip } from 'react-native-zip-archive';
 
 const Dirs = RNFetchBlob.fs.dirs;
 
@@ -77,9 +73,7 @@ class EpubStreamer {
   }
 
   add(bookUrl) {
-    let uri = new Uri(bookUrl);
     const filename = this.filename(bookUrl);
-    __DEV__ && console.log('filename', filename);
 
     return RNFetchBlob.config({
       fileCache: true,
@@ -95,8 +89,6 @@ class EpubStreamer {
           this.urls.push(bookUrl);
           this.locals.push(url);
           this.paths.push(path);
-
-          // res.flush();
 
           return url;
         });
@@ -136,13 +128,13 @@ class EpubStreamer {
   remove(path) {
     return RNFetchBlob.fs
       .lstat(path)
-      .then(stats => {
+      .then(() => {
         let index = this.paths.indexOf(path);
         this.paths.splice(index, 1);
         this.urls.splice(index, 1);
         this.locals.splice(index, 1);
       })
-      .catch(err => {});
+      .catch(() => {});
   }
 
   clean() {

@@ -1,6 +1,6 @@
 {
   "name": "@seongjoojin/epubjs-rn",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": "https://github.com/seongjoojin/epubjs-rn",
   "main": "./components/index.js",
   "private": false,
@@ -14,11 +14,11 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
-    "@babel/polyfill": "^7.8.7",
+    "@babel/polyfill": "7.4.4",
     "@lightbase/react-native-orientation": "3.2.6",
-    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-community/async-storage": "1.7.1",
     "base-64": "^0.1.0",
-    "buffer": "^5.5.0",
+    "buffer": "5.2.1",
     "epubjs": "^0.3.85",
     "events": "^3.1.0",
     "i": "^0.3.6",
@@ -29,11 +29,11 @@
     "react-native": "0.61.5",
     "react-native-static-server": "0.4.2",
     "react-native-webview": ">=8.0.3",
-    "react-native-zip-archive": "^5.0.2",
+    "react-native-zip-archive": "5.0.0",
     "rn-fetch-blob": "0.12.0",
     "stream": "0.0.2",
     "stream-browserify": "^2.0.2",
-    "util": "^0.12.2"
+    "util": "0.12.0"
   },
   "peerDependencies": {
     "react": "*",

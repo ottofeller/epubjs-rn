@@ -4,19 +4,12 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  Dimensions,
-  Platform,
-  AppState,
   TouchableOpacity
 } from 'react-native';
 
 import { WebView } from 'react-native-webview';
 
 import EventEmitter from 'event-emitter';
-
-import AsyncStorage from '@react-native-community/async-storage';
-
-const URL = require('epubjs/libs/url/url-polyfill.js');
 
 const EMBEDDED_HTML = `
 <!DOCTYPE html>
@@ -34,6 +27,7 @@ const EMBEDDED_HTML = `
       -webkit-tap-highlight-color: rgba(0,0,0,0);
       -webkit-tap-highlight-color: transparent; /* For some Androids */
     }
+
     /* For iPhone X Notch */
     @media only screen
       and (min-device-width : 375px)
@@ -61,7 +55,6 @@ class Rendition extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    console.log('Rendition', this.props.url);
 
     if (this.props.url) {
       this.load(this.props.url);
@@ -79,12 +72,7 @@ class Rendition extends Component {
     }
 
     if (prevProps.display !== this.props.display) {
-      // this.setState({ loaded: false });
       this.display(this.props.display);
-    }
-
-    if (prevProps.orientation !== this.props.orientation) {
-      // this.setState({ loaded: false });
     }
 
     if (prevProps.flow !== this.props.flow) {

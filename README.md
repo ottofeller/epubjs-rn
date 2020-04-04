@@ -7,13 +7,13 @@ Uses [EPUB.js](https://github.com/futurepress/epub.js) to parse and render epubs
 To use the components in your own app install via npm or yarn
 
 ```bash
-yarn add @seongjoojin/epubjs-rn rn-fetch-blob @react-native-community/async-storage react-native-webview @lightbase/react-native-orientation
+yarn add @seongjoojin/epubjs-rn @react-native-community/async-storage react-native-webview @lightbase/react-native-orientation
 ```
 
 **Important : The installed libraries also need to set each library**
 
-https://github.com/joltup/rn-fetch-blob/wiki/Manually-Link-Package
 https://github.com/react-native-community/react-native-webview/blob/master/docs/Getting-Started.md
+
 https://github.com/lightbasenl/react-native-orientation#linking-native-dependencies
 
 libraries pod install (ios)
@@ -35,7 +35,7 @@ Then you can add the reader element in your code:
 flow={"paginated"} />
 ```
 
-- `src`: the url of your epub to render
+- `src`: the url of your epub to render (only opf file)
 - `flow`: `paginated` : `scrolled` - (default to false, which presents a scrolling view)
 - `location`: Can be an EPUBCFI, Chapter Url or Spine Position
 - `onLocationChange`: Function called on every page change, reports current CFI
@@ -57,28 +57,6 @@ flow={"paginated"} />
 - `onDlbPress`: double tap on the screen
 - `onLongPress`: Press and hold
 - `onSelected`: When the browser selects text
-
-## Using a local file server
-
-To unzip compressed epubs locally and use http to stream them to epubjs,
-you will want to use the `Streamer` class to manage the files and start a [StaticServer](https://github.com/futurepress/react-native-static-server).
-
-An example of this method is provided in the example app.
-
-```
-import { Epub, Streamer } from "epubjs-rn";
-let streamer = new Streamer();
-
-streamer.start("8899")
-	.then((origin) => {
-		console.log("Served from:", origin)
-		return this.streamer.get("https://s3.amazonaws.com/epubjs/books/moby-dick.epub");
-	})
-	.then((src) => {
-		console.log("Loading from:", src);
-		return this.setState({src});
-	});
-```
 
 ## Other
 
