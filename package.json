@@ -1,6 +1,6 @@
 {
   "name": "@seongjoojin/epubjs-rn",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": "https://github.com/seongjoojin/epubjs-rn",
   "main": "./components/index.js",
   "private": false,
@@ -14,11 +14,11 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
-    "@babel/polyfill": "7.4.4",
+    "@babel/polyfill": "^7.8.7",
     "@lightbase/react-native-orientation": "3.2.6",
-    "@react-native-community/async-storage": "1.7.1",
+    "@react-native-community/async-storage": "^1.9.0",
     "base-64": "^0.1.0",
-    "buffer": "5.2.1",
+    "buffer": "^5.5.0",
     "epubjs": "^0.3.85",
     "events": "^3.1.0",
     "i": "^0.3.6",
@@ -28,29 +28,29 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-static-server": "0.4.2",
-    "react-native-webview": ">=8.0.3",
+    "react-native-webview": ">=9.0.2",
     "react-native-zip-archive": "^5.0.2",
     "rn-fetch-blob": "0.12.0",
     "stream": "0.0.2",
     "stream-browserify": "^2.0.2",
-    "util": "0.12.0"
+    "util": "^0.12.2"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/runtime": "^7.4.5",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/runtime": "^7.9.2",
     "babel-jest": "^24.8.0",
-    "babel-plugin-module-resolver": "^3.2.0",
-    "babel-plugin-static-fs": "^1.2.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-static-fs": "^3.0.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "gulp": "^4.0.2",
     "jest": "^24.8.0",
-    "metro-react-native-babel-preset": "^0.54.1",
+    "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "16.8.6"
   },
   "files": [

@@ -17,7 +17,7 @@ const App = () => {
   const navRef = useRef(null);
   const epubRef = useRef(null);
 
-  const [flow, setFlow] = useState('paginated');
+  const [flow, setFlow] = useState('scrolled-continuous');
   const [location, setLocation] = useState(6);
   const [url, setUrl] = useState(
     'https://s3.amazonaws.com/epubjs/books/moby-dick.epub',
@@ -112,18 +112,7 @@ const App = () => {
           }}
         />
         <View style={[styles.bar, {top: 0}]}>
-          <TopBar
-            title={title}
-            shown={showBars}
-            onLeftButtonPressed={() => setShowNav(true)}
-            onRightButtonPressed={(value) => {
-              if (flow === 'paginated') {
-                setFlow('scrolled-continuous');
-              } else {
-                setFlow('paginated');
-              }
-            }}
-          />
+          <TopBar title={title} shown={showBars} />
         </View>
         <View style={[styles.bar, {bottom: 0}]}>
           <BottomBar
@@ -145,9 +134,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   reader: {
+    position: 'relative',
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: '#3F3F3C',
   },
   bar: {
     position: 'absolute',

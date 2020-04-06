@@ -19,6 +19,7 @@
     "@seongjoojin/epubjs-rn": "file:./epubjs-rn.tgz",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-static-server": "^0.4.2",
     "react-native-webview": "^9.0.2",
     "react-native-zip-archive": "^5.0.2",
     "rn-fetch-blob": "^0.12.0"

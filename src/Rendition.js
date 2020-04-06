@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 
 import { WebView } from 'react-native-webview';
@@ -49,7 +49,7 @@ class Rendition extends Component {
     this.webviewbridgeRef = React.createRef();
 
     this.state = {
-      loaded: false
+      loaded: false,
     };
   }
 
@@ -112,7 +112,7 @@ class Rendition extends Component {
       minSpreadWidth: this.props.minSpreadWidth || 815,
       flow: this.props.flow || 'paginated',
       gap: this.props.gap,
-      fullsize: true
+      fullsize: true,
     };
 
     if (this.props.stylesheet) {
@@ -266,7 +266,7 @@ class Rendition extends Component {
     var str = JSON.stringify({
       method: method,
       args: args,
-      promise: promiseId
+      promise: promiseId,
     });
 
     if (!this.webviewbridgeRef.current) {
@@ -416,8 +416,8 @@ class Rendition extends Component {
           style={[
             styles.loadScreen,
             {
-              backgroundColor: this.props.backgroundColor || '#FFFFFF'
-            }
+              backgroundColor: this.props.backgroundColor || '#FFFFFF',
+            },
           ]}
         >
           <ActivityIndicator
@@ -442,8 +442,9 @@ class Rendition extends Component {
             maxWidth: this.props.width,
             maxHeight: this.props.height,
             minWidth: this.props.width,
-            minHeight: this.props.height
-          }
+            minHeight: this.props.height,
+          },
+          this.props.flow !== 'paginated' ? styles.scrollContainer : null,
         ]}
       >
         <WebView
@@ -456,8 +457,8 @@ class Rendition extends Component {
           style={[
             styles.manager,
             {
-              backgroundColor: this.props.backgroundColor || '#FFFFFF'
-            }
+              backgroundColor: this.props.backgroundColor || '#FFFFFF',
+            },
           ]}
           bounces={false}
           javaScriptEnabled={true}
@@ -479,20 +480,20 @@ class Rendition extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   manager: {
-    flex: 1
+    flex: 1,
   },
   scrollContainer: {
     flex: 1,
     marginTop: 0,
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    backgroundColor: '#F8F8F8'
+    backgroundColor: '#F8F8F8',
   },
   rowContainer: {
-    flex: 1
+    flex: 1,
   },
   loadScreen: {
     position: 'absolute',
@@ -502,13 +503,13 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 Rendition.defaultProps = {
   showsHorizontalScrollIndicator: true,
-  showsVerticalScrollIndicator: true
+  showsVerticalScrollIndicator: true,
 };
 
 EventEmitter(Rendition.prototype);
