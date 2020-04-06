@@ -5616,6 +5616,11 @@ react-native-zip-archive@5.0.0:
   resolved "https://registry.yarnpkg.com/react-native-zip-archive/-/react-native-zip-archive-5.0.0.tgz#7833e48b895f3da1f6c99b6f504f124ee243667f"
   integrity sha512-4AoBKb09lKESRaKcwhBG4+DLAhEHlw4H7AKUZC5zFHjtsaewNfwAMRgP3y+K2mjKN+Ihr/O7NFJFVEDrtarygg==
 
+react-native-zip-archive@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-zip-archive/-/react-native-zip-archive-5.0.2.tgz#cfa2aa8c97dd4ccb2dd8c99812ec7d9e20bf7549"
+  integrity sha512-s/dSQ+XDK1aPnZ2YH1abIAWLwfylU1WptnQ0HuPVO0tahQKGQpcEgj+UQXnzPnUFHwAlTfvV7PjVyZQukNvWjw==
+
 react-native@0.61.5:
   version "0.61.5"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.61.5.tgz#6e21acb56cbd75a3baeb1f70201a66f42600bba8"
@@ -5937,7 +5942,7 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
-rn-fetch-blob@0.12.0:
+rn-fetch-blob@0.12.0, rn-fetch-blob@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/rn-fetch-blob/-/rn-fetch-blob-0.12.0.tgz#ec610d2f9b3f1065556b58ab9c106eeb256f3cba"
   integrity sha512-+QnR7AsJ14zqpVVUbzbtAjq0iI8c9tCg49tIoKO2ezjzRunN7YL6zFSFSWZm6d+mE/l9r+OeDM3jmb2tBb2WbA==

@@ -6291,10 +6291,10 @@ react-native-webview@>=8.0.3:
     invariant "2.2.4"
     rnpm-plugin-windows "^0.5.1-0"
 
-react-native-zip-archive@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-zip-archive/-/react-native-zip-archive-5.0.0.tgz#7833e48b895f3da1f6c99b6f504f124ee243667f"
-  integrity sha512-4AoBKb09lKESRaKcwhBG4+DLAhEHlw4H7AKUZC5zFHjtsaewNfwAMRgP3y+K2mjKN+Ihr/O7NFJFVEDrtarygg==
+react-native-zip-archive@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-zip-archive/-/react-native-zip-archive-5.0.2.tgz#cfa2aa8c97dd4ccb2dd8c99812ec7d9e20bf7549"
+  integrity sha512-s/dSQ+XDK1aPnZ2YH1abIAWLwfylU1WptnQ0HuPVO0tahQKGQpcEgj+UQXnzPnUFHwAlTfvV7PjVyZQukNvWjw==
 
 react-native@0.61.5:
   version "0.61.5"

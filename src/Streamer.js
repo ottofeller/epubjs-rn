@@ -32,7 +32,7 @@ class EpubStreamer {
     // Add the directory
     return RNFetchBlob.fs
       .exists(`${Dirs.DocumentDir}/${this.root}`)
-      .then(exists => {
+      .then((exists) => {
         if (!exists) {
           return RNFetchBlob.fs.mkdir(`${Dirs.DocumentDir}/${this.root}`);
         }
@@ -40,7 +40,7 @@ class EpubStreamer {
       .then(() => {
         return new StaticServer(this.port, this.root, { localOnly: true });
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
       });
   }
@@ -48,11 +48,11 @@ class EpubStreamer {
   start() {
     this.started = true;
     return this.setup()
-      .then(server => {
+      .then((server) => {
         this.server = server;
         return this.server.start();
       })
-      .then(url => {
+      .then((url) => {
         this.serverOrigin = url;
         return url;
       });
@@ -77,15 +77,15 @@ class EpubStreamer {
 
     return RNFetchBlob.config({
       fileCache: true,
-      path: Dirs.DocumentDir + '/' + filename
+      path: Dirs.DocumentDir + '/' + filename,
     })
       .fetch('GET', bookUrl)
-      .then(res => {
+      .then((res) => {
         const sourcePath = res.path();
         const targetPath = `${Dirs.DocumentDir}/${this.root}/${filename}`;
         const url = `${this.serverOrigin}/${filename}/`;
 
-        return unzip(sourcePath, targetPath).then(path => {
+        return unzip(sourcePath, targetPath).then((path) => {
           this.urls.push(bookUrl);
           this.locals.push(url);
           this.paths.push(path);
@@ -103,7 +103,7 @@ class EpubStreamer {
   }
 
   get(bookUrl) {
-    return this.check(bookUrl).then(exists => {
+    return this.check(bookUrl).then((exists) => {
       if (exists) {
         const filename = this.filename(bookUrl);
         const url = `${this.serverOrigin}/${filename}/`;
@@ -138,7 +138,7 @@ class EpubStreamer {
   }
 
   clean() {
-    this.paths.forEach(path => {
+    this.paths.forEach((path) => {
       this.remove(path);
     });
   }

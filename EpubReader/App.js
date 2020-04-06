@@ -8,7 +8,7 @@
 
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, StyleSheet, StatusBar, View} from 'react-native';
-import {Epub} from '@seongjoojin/epubjs-rn';
+import {Epub, Streamer} from '@seongjoojin/epubjs-rn';
 
 import TopBar from './app/TopBar';
 import BottomBar from './app/BottomBar';
@@ -19,9 +19,10 @@ const App = () => {
 
   const [flow, setFlow] = useState('paginated');
   const [location, setLocation] = useState(6);
-  const [src, setSrc] = useState(
-    'https://s3.amazonaws.com/epubjs/books/moby-dick/OPS/package.opf',
+  const [url, setUrl] = useState(
+    'https://s3.amazonaws.com/epubjs/books/moby-dick.epub',
   );
+  const [src, setSrc] = useState('');
   const [title, setTitle] = useState('');
   const [toc, setToc] = useState([]);
   const [showBars, setShowBars] = useState(true);
@@ -34,9 +35,20 @@ const App = () => {
   };
 
   useEffect(() => {
+    const streamer = new Streamer();
+    streamer
+      .start()
+      .then((origin) => {
+        return streamer.get(url);
+      })
+      .then((src) => {
+        return setSrc(src);
+      });
     setTimeout(() => toggleBars(), 1000);
 
-    () => {};
+    () => {
+      streamer.kill();
+    };
   }, []);
 
   return (
@@ -49,15 +61,15 @@ const App = () => {
           src={src}
           flow={flow}
           location={location}
-          onLocationChange={visibleLocation => {
+          onLocationChange={(visibleLocation) => {
             console.log('locationChanged', visibleLocation);
             setVisibleLocation(visibleLocation);
           }}
-          onLocationsReady={locations => {
+          onLocationsReady={(locations) => {
             // console.log("location total", locations.total);
             setSliderDisabled(false);
           }}
-          onReady={book => {
+          onReady={(book) => {
             // console.log("Metadata", book.package.metadata)
             // console.log("Table of Contents", book.toc)
             setTitle(book.package.metadata.title);
@@ -77,10 +89,10 @@ const App = () => {
             // imgSrc is the actual src in the img html tag
             console.log('dblpress', cfi, position, imgSrc);
           }}
-          onViewAdded={index => {
+          onViewAdded={(index) => {
             console.log('added', index);
           }}
-          beforeViewRemoved={index => {
+          beforeViewRemoved={(index) => {
             console.log('removed', index);
           }}
           onSelected={(cfiRange, rendition) => {
@@ -92,7 +104,7 @@ const App = () => {
             console.log('mark clicked', cfiRange);
             rendition.unhighlight(cfiRange);
           }}
-          onError={message => {
+          onError={(message) => {
             console.log('EPUBJS-Webview', message);
           }}
         />
@@ -101,7 +113,7 @@ const App = () => {
             title={title}
             shown={showBars}
             onLeftButtonPressed={() => setShowNav(true)}
-            onRightButtonPressed={value => {
+            onRightButtonPressed={(value) => {
               if (flow === 'paginated') {
                 setFlow('scrolled-continuous');
               } else {
@@ -115,7 +127,7 @@ const App = () => {
             disabled={sliderDisabled}
             value={visibleLocation ? visibleLocation.start.percentage : 0}
             shown={showBars}
-            onSlidingComplete={value => {
+            onSlidingComplete={(value) => {
               setLocation(value.toFixed(6));
             }}
           />

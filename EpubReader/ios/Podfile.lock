@@ -227,6 +227,14 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.9.0):
     - React
+  - RNZipArchive (5.0.2):
+    - React
+    - RNZipArchive/Core (= 5.0.2)
+    - SSZipArchive (= 2.2.2)
+  - RNZipArchive/Core (5.0.2):
+    - React
+    - SSZipArchive (= 2.2.2)
+  - SSZipArchive (2.2.2)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -262,11 +270,13 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - RNZipArchive (from `../node_modules/react-native-zip-archive`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - SSZipArchive
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -327,6 +337,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-fetch-blob"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNZipArchive:
+    :path: "../node_modules/react-native-zip-archive"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -361,6 +373,8 @@ SPEC CHECKSUMS:
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: 453cd7c335ec9ba3b877e27d02238956b76f3268
+  RNZipArchive: ab51bc004a31657f34010254a9182014c6a81217
+  SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
 PODFILE CHECKSUM: 6f3be1ee1d13dffbc4c35c0c5466383559ed02d2

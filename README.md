@@ -7,14 +7,18 @@ Uses [EPUB.js](https://github.com/futurepress/epub.js) to parse and render epubs
 To use the components in your own app install via npm or yarn
 
 ```bash
-yarn add @seongjoojin/epubjs-rn @react-native-community/async-storage react-native-webview @lightbase/react-native-orientation
+yarn add @seongjoojin/epubjs-rn @react-native-community/async-storage react-native-webview @lightbase/react-native-orientation rn-fetch-blob react-native-zip-archive
 ```
 
 **Important : The installed libraries also need to set each library**
 
+https://github.com/joltup/rn-fetch-blob#installation
+
 https://github.com/react-native-community/react-native-webview/blob/master/docs/Getting-Started.md
 
 https://github.com/lightbasenl/react-native-orientation#linking-native-dependencies
+
+https://github.com/futurepress/react-native-static-server/issues/57#issuecomment-486171799
 
 libraries pod install (ios)
 
@@ -57,6 +61,46 @@ flow={"paginated"} />
 - `onDlbPress`: double tap on the screen
 - `onLongPress`: Press and hold
 - `onSelected`: When the browser selects text
+
+## Using a local file server
+
+To unzip compressed epubs locally and use http to stream them to epubjs,
+you will want to use the `Streamer` class to manage the files and start a [StaticServer](https://github.com/futurepress/react-native-static-server).
+
+An example of this method is provided in the example app.
+
+```
+import { Epub, Streamer } from "epubjs-rn";
+let streamer = new Streamer();
+
+streamer.start("8899")
+	.then((origin) => {
+		console.log("Served from:", origin)
+		return this.streamer.get("https://s3.amazonaws.com/epubjs/books/moby-dick.epub");
+	})
+	.then((src) => {
+		console.log("Loading from:", src);
+		return this.setState({src});
+	});
+```
+
+## Running the example app
+
+Install with yarn. (Don't use NPM unless you flatten the packages after install)
+
+```bash
+cd EpubReader/
+yarn
+cd ios && pod install && cd ../
+```
+
+Then start the iOS or Android App
+
+```bash
+yarn start
+yarn andorid
+yarn ios
+```
 
 ## Other
 
