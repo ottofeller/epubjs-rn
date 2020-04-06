@@ -59,6 +59,11 @@ const TopBar = ({title, shown, onLeftButtonPressed, onRightButtonPressed}) => {
   return (
     <Animated.View style={[styles.header, {opacity: fadeAnim}]}>
       <Text style={styles.title}>{title}</Text>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={onRightButtonPressed}>
+        <Text>gear</Text>
+      </TouchableOpacity>
     </Animated.View>
   );
 };

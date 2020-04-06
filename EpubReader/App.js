@@ -112,7 +112,17 @@ const App = () => {
           }}
         />
         <View style={[styles.bar, {top: 0}]}>
-          <TopBar title={title} shown={showBars} />
+          <TopBar
+            title={title}
+            shown={showBars}
+            onRightButtonPressed={() => {
+              if (flow === 'paginated') {
+                setFlow('scrolled-continuous');
+              } else {
+                setFlow('paginated');
+              }
+            }}
+          />
         </View>
         <View style={[styles.bar, {bottom: 0}]}>
           <BottomBar
