@@ -22,6 +22,7 @@ const App = () => {
   const [url, setUrl] = useState(
     'https://s3.amazonaws.com/epubjs/books/moby-dick.epub',
   );
+  const [origin, setOrgin] = useState('');
   const [src, setSrc] = useState('');
   const [title, setTitle] = useState('');
   const [toc, setToc] = useState([]);
@@ -39,6 +40,7 @@ const App = () => {
     streamer
       .start()
       .then((origin) => {
+        setOrgin(origin);
         return streamer.get(url);
       })
       .then((src) => {
@@ -61,6 +63,7 @@ const App = () => {
           src={src}
           flow={flow}
           location={location}
+          origin={origin}
           onLocationChange={(visibleLocation) => {
             console.log('locationChanged', visibleLocation);
             setVisibleLocation(visibleLocation);
