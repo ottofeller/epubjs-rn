@@ -12,12 +12,12 @@ import {Epub, Streamer} from '@seongjoojin/epubjs-rn';
 
 import TopBar from './app/TopBar';
 import BottomBar from './app/BottomBar';
+import Nav from './app/Nav';
 
 const App = () => {
-  const navRef = useRef(null);
   const epubRef = useRef(null);
 
-  const [flow, setFlow] = useState('scrolled-continuous');
+  const [flow, setFlow] = useState('paginated');
   const [location, setLocation] = useState(6);
   const [url, setUrl] = useState(
     'https://s3.amazonaws.com/epubjs/books/moby-dick.epub',
@@ -30,9 +30,14 @@ const App = () => {
   const [sliderDisabled, setSliderDisabled] = useState(true);
   const [book, setBook] = useState(null);
   const [visibleLocation, setVisibleLocation] = useState(null);
+  const [showNav, setShowNav] = useState(false);
 
   const toggleBars = () => {
     setShowBars(!showBars);
+  };
+
+  const closeNavModal = () => {
+    setShowNav(false);
   };
 
   useEffect(() => {
@@ -46,7 +51,7 @@ const App = () => {
       .then((src) => {
         return setSrc(src);
       });
-    setTimeout(() => toggleBars(), 1000);
+    // setTimeout(() => toggleBars(), 1000);
 
     () => {
       streamer.kill();
@@ -115,6 +120,9 @@ const App = () => {
           <TopBar
             title={title}
             shown={showBars}
+            onLeftButtonPressed={() => {
+              setShowNav(true);
+            }}
             onRightButtonPressed={() => {
               if (flow === 'paginated') {
                 setFlow('scrolled-continuous');
@@ -134,6 +142,16 @@ const App = () => {
             }}
           />
         </View>
+        {showNav && (
+          <Nav
+            visible={showNav}
+            closeModal={closeNavModal}
+            data={toc}
+            display={(loc) => {
+              setLocation(loc);
+            }}
+          />
+        )}
       </SafeAreaView>
     </>
   );

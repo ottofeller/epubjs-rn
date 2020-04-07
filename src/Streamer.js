@@ -2,7 +2,7 @@ import StaticServer from 'react-native-static-server';
 
 import RNFetchBlob from 'rn-fetch-blob';
 
-import { zip, unzip } from 'react-native-zip-archive';
+import { unzip } from 'react-native-zip-archive';
 
 const Dirs = RNFetchBlob.fs.dirs;
 

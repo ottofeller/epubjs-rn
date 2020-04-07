@@ -1,13 +1,13 @@
-window.onerror = function(message, file, line, col, error) {
-  var msg = JSON.stringify({ method: 'error', value: message });
+window.onerror = function (message, file, line, col, error) {
+  const msg = JSON.stringify({ method: 'error', value: message });
   window.postMessage(msg, '*');
 };
 
-(function() {
+(function () {
   function _ready() {
-    var contents;
-    var targetOrigin = '*';
-    var sendMessage = function(obj) {
+    const contents;
+    const targetOrigin = '*';
+    const sendMessage = function (obj) {
       // window.postMessage(JSON.stringify(obj), targetOrigin);
       if (!window.ReactNativeWebView.postMessage) {
         setTimeout(() => {
@@ -18,46 +18,46 @@ window.onerror = function(message, file, line, col, error) {
       }
     };
 
-    var q = [];
-    var _isReady = false;
+    let q = [];
+    let _isReady = false;
 
-    var book;
-    var rendition;
+    let book;
+    let rendition;
 
-    var minSpreadWidth = 815;
-    var axis = 'horizontal';
+    let minSpreadWidth = 815;
+    const axis = 'horizontal';
 
-    var isChrome = /Chrome/.test(navigator.userAgent);
-    var isWebkit = !isChrome && /AppleWebKit/.test(navigator.userAgent);
+    const isChrome = /Chrome/.test(navigator.userAgent);
+    const isWebkit = !isChrome && /AppleWebKit/.test(navigator.userAgent);
 
     // debug
-    console.log = function() {
+    console.log = function () {
       sendMessage({ method: 'log', value: Array.from(arguments) });
     };
 
-    console.error = function() {
+    console.error = function () {
       sendMessage({ method: 'error', value: Array.from(arguments) });
     };
 
     function onMessage(e) {
-      var message = e.data;
+      const message = e.data;
       handleMessage(message);
     }
 
     function handleMessage(message) {
-      var decoded = typeof message == 'object' ? message : JSON.parse(message);
-      var response;
-      var result;
+      let decoded = typeof message == 'object' ? message : JSON.parse(message);
+      let response;
+      let result;
 
       switch (decoded.method) {
         case 'open': {
-          var url = decoded.args[0];
-          var options = decoded.args.length > 1 && decoded.args[1];
+          let url = decoded.args[0];
+          let options = decoded.args.length > 1 && decoded.args[1];
           openEpub(url, options);
 
           if (options && options.webviewStylesheet) {
-            var head = document.getElementsByTagName('head')[0];
-            var link = document.createElement('link');
+            let head = document.getElementsByTagName('head')[0];
+            let link = document.createElement('link');
             link.rel = 'stylesheet';
             link.type = 'text/css';
             link.href = options.webviewStylesheet;
@@ -67,8 +67,8 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'display': {
-          var args = decoded.args && decoded.args.length && decoded.args[0];
-          var target;
+          let args = decoded.args && decoded.args.length && decoded.args[0];
+          let target;
 
           if (!args) {
             target = undefined;
@@ -86,7 +86,7 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'flow': {
-          var direction = decoded.args.length && decoded.args[0];
+          const direction = decoded.args.length && decoded.args[0];
           axis = direction === 'paginated' ? 'horizontal' : 'vertical';
 
           if (rendition) {
@@ -98,8 +98,8 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'resize': {
-          var width = decoded.args.length && decoded.args[0];
-          var height = decoded.args.length > 1 && decoded.args[1];
+          const width = decoded.args.length && decoded.args[0];
+          const height = decoded.args.length > 1 && decoded.args[1];
 
           if (rendition) {
             rendition.resize(width, height);
@@ -110,7 +110,7 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'setLocations': {
-          var locations = decoded.args[0];
+          const locations = decoded.args[0];
           if (book) {
             book.locations.load(locations);
           } else {
@@ -179,7 +179,7 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'themes': {
-          var themes = decoded.args[0];
+          const themes = decoded.args[0];
           if (rendition) {
             rendition.themes.register(themes);
           } else {
@@ -188,7 +188,7 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'theme': {
-          var theme = decoded.args[0];
+          const theme = decoded.args[0];
           if (rendition) {
             rendition.themes.select(theme);
           } else {
@@ -197,7 +197,7 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'fontSize': {
-          var fontSize = decoded.args[0];
+          let fontSize = decoded.args[0];
           if (rendition) {
             rendition.themes.fontSize(fontSize);
           } else {
@@ -206,7 +206,7 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'font': {
-          var font = decoded.args[0];
+          let font = decoded.args[0];
           if (rendition) {
             rendition.themes.font(font);
           } else {
@@ -223,7 +223,7 @@ window.onerror = function(message, file, line, col, error) {
           break;
         }
         case 'gap': {
-          var gap = decoded.args[0];
+          const gap = decoded.args[0];
           if (rendition) {
             rendition.settings.gap = gap;
             if (rendition.manager) {
@@ -254,13 +254,13 @@ window.onerror = function(message, file, line, col, error) {
     }
 
     function openEpub(url, options) {
-      var settings = Object.assign(
+      const settings = Object.assign(
         {
           manager: 'continuous',
           overflow: 'visible',
           method: 'blobUrl',
           fullsize: true,
-          snap: isChrome
+          snap: isChrome,
         },
         options
       );
@@ -270,20 +270,20 @@ window.onerror = function(message, file, line, col, error) {
       window.rendition = rendition = book.renderTo(document.body, settings);
 
       rendition.hooks.content.register(
-        function(contents, rendition) {
-          var doc = contents.document;
-          var startPosition = { x: -1, y: -1 };
-          var currentPosition = { x: -1, y: -1 };
-          var isLongPress = false;
-          var longPressTimer;
-          var touchduration = 250;
-          var $body = doc.getElementsByTagName('body')[0];
-          var lastTap = undefined;
-          var preventTap = false;
-          var doubleTap = false;
+        function (contents, rendition) {
+          const doc = contents.document;
+          let startPosition = { x: -1, y: -1 };
+          let currentPosition = { x: -1, y: -1 };
+          let isLongPress = false;
+          let longPressTimer;
+          let touchduration = 250;
+          let $body = doc.getElementsByTagName('body')[0];
+          let lastTap = undefined;
+          let preventTap = false;
+          let doubleTap = false;
 
           function touchStartHandler(e) {
-            var f, target;
+            let f, target;
             startPosition.x = e.targetTouches[0].pageX;
             startPosition.y = e.targetTouches[0].pageY;
             currentPosition.x = e.targetTouches[0].pageX;
@@ -291,7 +291,7 @@ window.onerror = function(message, file, line, col, error) {
             isLongPress = false;
 
             if (isWebkit) {
-              for (var i = 0; i < e.targetTouches.length; i++) {
+              for (let i = 0; i < e.targetTouches.length; i++) {
                 f = e.changedTouches[i].force;
                 if (f >= 0.8 && !preventTap) {
                   target = e.changedTouches[i].target;
@@ -307,7 +307,7 @@ window.onerror = function(message, file, line, col, error) {
                   sendMessage({
                     method: 'longpress',
                     position: currentPosition,
-                    cfi: cfi
+                    cfi: cfi,
                   });
                   isLongPress = false;
                   preventTap = true;
@@ -315,7 +315,7 @@ window.onerror = function(message, file, line, col, error) {
               }
             }
 
-            let now = Date.now();
+            const now = Date.now();
             if (lastTap && now - lastTap < touchduration && !doubleTap) {
               let imgSrc = null;
               if (e.changedTouches[0].target.hasAttribute('src')) {
@@ -329,13 +329,13 @@ window.onerror = function(message, file, line, col, error) {
                 method: 'dblpress',
                 position: currentPosition,
                 cfi: cfi,
-                imgSrc: imgSrc
+                imgSrc: imgSrc,
               });
             } else {
               lastTap = now;
             }
 
-            longPressTimer = setTimeout(function() {
+            longPressTimer = setTimeout(function () {
               target = e.targetTouches[0].target;
 
               if (target.getAttribute('ref') === 'epubjs-mk') {
@@ -347,7 +347,7 @@ window.onerror = function(message, file, line, col, error) {
               sendMessage({
                 method: 'longpress',
                 position: currentPosition,
-                cfi: cfi
+                cfi: cfi,
               });
               preventTap = true;
             }, touchduration);
@@ -360,7 +360,7 @@ window.onerror = function(message, file, line, col, error) {
           }
 
           function touchEndHandler(e) {
-            var cfi;
+            let cfi;
             clearTimeout(longPressTimer);
 
             if (preventTap) {
@@ -372,7 +372,7 @@ window.onerror = function(message, file, line, col, error) {
               Math.abs(startPosition.x - currentPosition.x) < 2 &&
               Math.abs(startPosition.y - currentPosition.y) < 2
             ) {
-              var target = e.changedTouches[0].target;
+              let target = e.changedTouches[0].target;
 
               if (
                 target.getAttribute('ref') === 'epubjs-mk' ||
@@ -388,11 +388,11 @@ window.onerror = function(message, file, line, col, error) {
                 sendMessage({
                   method: 'longpress',
                   position: currentPosition,
-                  cfi: cfi
+                  cfi: cfi,
                 });
                 isLongPress = false;
               } else {
-                setTimeout(function() {
+                setTimeout(function () {
                   if (preventTap || doubleTap) {
                     preventTap = false;
                     isLongPress = false;
@@ -402,7 +402,7 @@ window.onerror = function(message, file, line, col, error) {
                   sendMessage({
                     method: 'press',
                     position: currentPosition,
-                    cfi: cfi
+                    cfi: cfi,
                   });
                 }, touchduration);
               }
@@ -410,9 +410,9 @@ window.onerror = function(message, file, line, col, error) {
           }
 
           function touchForceHandler(e) {
-            var f = e.changedTouches[0].force;
+            const f = e.changedTouches[0].force;
             if (f >= 0.8 && !preventTap) {
-              var target = e.changedTouches[0].target;
+              const target = e.changedTouches[0].target;
 
               if (target.getAttribute('ref') === 'epubjs-mk') {
                 return;
@@ -425,7 +425,7 @@ window.onerror = function(message, file, line, col, error) {
               sendMessage({
                 method: 'longpress',
                 position: currentPosition,
-                cfi: cfi
+                cfi: cfi,
               });
               isLongPress = false;
               preventTap = true;
@@ -443,50 +443,54 @@ window.onerror = function(message, file, line, col, error) {
         }.bind(this)
       );
 
-      rendition.on('relocated', function(location) {
+      rendition.on('relocated', function (location) {
         sendMessage({ method: 'relocated', location: location });
       });
 
-      rendition.on('selected', function(cfiRange) {
+      rendition.on('selected', function (cfiRange) {
         sendMessage({ method: 'selected', cfiRange: cfiRange });
       });
 
-      rendition.on('markClicked', function(cfiRange, data) {
+      rendition.on('markClicked', function (cfiRange, data) {
         sendMessage({ method: 'markClicked', cfiRange: cfiRange, data: data });
       });
 
-      rendition.on('rendered', function(section) {
+      rendition.on('rendered', function (section) {
         sendMessage({ method: 'rendered', sectionIndex: section.index });
       });
 
-      rendition.on('added', function(section) {
+      rendition.on('added', function (section) {
         sendMessage({ method: 'added', sectionIndex: section.index });
       });
 
-      rendition.on('removed', function(section) {
+      rendition.on('removed', function (section) {
         sendMessage({ method: 'removed', sectionIndex: section.index });
       });
 
-      rendition.on('resized', function(size) {
+      rendition.on('resized', function (size) {
         sendMessage({ method: 'resized', size: size });
       });
 
+      rendition.on('display', function (target) {
+        sendMessage({ method: 'display', target: target });
+      });
+
       // replay messages
-      rendition.started.then(function() {
-        var msg;
-        for (var i = 0; i < q.length; i++) {
+      rendition.started.then(function () {
+        let msg;
+        for (let i = 0; i < q.length; i++) {
           msg = q.shift();
           handleMessage(msg);
         }
       });
 
-      book.ready.then(function() {
+      book.ready.then(function () {
         _isReady = true;
 
         sendMessage({ method: 'ready' });
       });
 
-      window.addEventListener('unload', function() {
+      window.addEventListener('unload', function () {
         book && book.destroy();
       });
     }
@@ -509,20 +513,20 @@ window.onerror = function(message, file, line, col, error) {
 if (typeof Object.assign !== 'function') {
   // Must be writable: true, enumerable: false, configurable: true
   Object.defineProperty(Object, 'assign', {
-    value: function assign(target, varArgs) {
+    value: function assign(target, letArgs) {
       // .length of function is 2
       'use strict';
       if (target === null || target === undefined) {
         throw new TypeError('Cannot convert undefined or null to object');
       }
 
-      var to = Object(target);
+      const to = Object(target);
 
-      for (var index = 1; index < arguments.length; index++) {
-        var nextSource = arguments[index];
+      for (let index = 1; index < arguments.length; index++) {
+        const nextSource = arguments[index];
 
         if (nextSource !== null && nextSource !== undefined) {
-          for (var nextKey in nextSource) {
+          for (let nextKey in nextSource) {
             // Avoid bugs when hasOwnProperty is shadowed
             if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
               to[nextKey] = nextSource[nextKey];
@@ -533,6 +537,6 @@ if (typeof Object.assign !== 'function') {
       return to;
     },
     writable: true,
-    configurable: true
+    configurable: true,
   });
 }

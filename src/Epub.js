@@ -28,14 +28,14 @@ class Epub extends Component {
   constructor(props) {
     super(props);
 
-    var bounds = Dimensions.get('window');
+    const bounds = Dimensions.get('window');
 
     this.state = {
       toc: [],
       show: false,
       width: bounds.width,
       height: bounds.height,
-      orientation: 'PORTRAIT'
+      orientation: 'PORTRAIT',
     };
   }
 
@@ -145,6 +145,14 @@ class Epub extends Component {
       return true;
     }
 
+    if (nextProps.location != this.props.location) {
+      return true;
+    }
+
+    if (nextProps.theme != this.props.theme) {
+      return true;
+    }
+
     return false;
   }
 
@@ -187,7 +195,7 @@ class Epub extends Component {
     __DEV__ && console.log('loading book: ', bookUrl);
 
     this.book = ePub({
-      replacements: this.props.base64 || 'none'
+      replacements: this.props.base64 || 'none',
     });
 
     return this._openBook(bookUrl);
@@ -196,14 +204,14 @@ class Epub extends Component {
   _openBook(bookUrl, useBase64) {
     __DEV__ && console.log('open book: ', bookUrl);
 
-    var type = useBase64 ? 'base64' : null;
+    const type = useBase64 ? 'base64' : null;
 
     if (!this.rendition) {
       this.needsOpen = [bookUrl, useBase64];
       return;
     }
 
-    this.book.open(bookUrl).catch(err => {
+    this.book.open(bookUrl).catch((err) => {
       console.error(err);
     });
 
@@ -212,14 +220,14 @@ class Epub extends Component {
       this.props.onReady && this.props.onReady(this.book);
     });
 
-    this.book.loaded.navigation.then(nav => {
+    this.book.loaded.navigation.then((nav) => {
       if (!this.active || !this._isMounted) return;
       this.setState({ toc: nav.toc });
       this.props.onNavigationReady && this.props.onNavigationReady(nav.toc);
     });
 
     if (this.props.generateLocations != false) {
-      this.loadLocations().then(locations => {
+      this.loadLocations().then((locations) => {
         this.rendition.setLocations(locations);
         this.props.onLocationsReady &&
           this.props.onLocationsReady(this.book.locations);
@@ -230,15 +238,15 @@ class Epub extends Component {
   loadLocations() {
     return this.book.ready.then(() => {
       // Load in stored locations from json or local storage
-      var key = this.book.key() + '-locations';
+      const key = this.book.key() + '-locations';
 
-      return AsyncStorage.getItem(key).then(stored => {
+      return AsyncStorage.getItem(key).then((stored) => {
         if (this.props.regenerateLocations != true && stored !== null) {
           return this.book.locations.load(stored);
         } else {
           return this.book.locations
             .generate(this.props.locationsCharBreak || 600)
-            .then(locations => {
+            .then((locations) => {
               // Save out the generated locations to JSON
               AsyncStorage.setItem(key, this.book.locations.save());
               return locations;
@@ -287,7 +295,7 @@ class Epub extends Component {
   render() {
     return (
       <Rendition
-        ref={r => {
+        ref={(r) => {
           this.rendition = r;
 
           if (this.needsOpen) {
@@ -333,20 +341,20 @@ class Epub extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   manager: {
-    flex: 1
+    flex: 1,
   },
   scrollContainer: {
     flex: 1,
     marginTop: 0,
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    backgroundColor: '#F8F8F8'
+    backgroundColor: '#F8F8F8',
   },
   rowContainer: {
-    flex: 1
+    flex: 1,
   },
   loadScreen: {
     position: 'absolute',
@@ -356,8 +364,8 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default Epub;

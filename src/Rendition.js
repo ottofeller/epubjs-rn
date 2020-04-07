@@ -161,6 +161,7 @@ class Rendition extends Component {
   }
 
   display(target) {
+    console.log('display', target);
     let spine = typeof target === 'number' && target;
 
     if (!this._webviewLoaded) return;
@@ -263,7 +264,7 @@ class Rendition extends Component {
   }
 
   sendToBridge(method, args, promiseId) {
-    var str = JSON.stringify({
+    const str = JSON.stringify({
       method: method,
       args: args,
       promise: promiseId,
@@ -284,14 +285,14 @@ class Rendition extends Component {
   }
 
   _onBridgeMessage(e) {
-    var msg = e.nativeEvent.data;
-    var decoded;
+    const msg = e.nativeEvent.data;
+    let decoded;
     if (typeof msg === 'string') {
       decoded = JSON.parse(msg);
     } else {
       decoded = msg; // webkit may pass parsed objects
     }
-    var p;
+    let p;
 
     switch (decoded.method) {
       case 'log': {
@@ -317,7 +318,7 @@ class Rendition extends Component {
         break;
       }
       case 'relocated': {
-        let { location } = decoded;
+        const { location } = decoded;
         this._relocated(location);
         if (!this.state.loaded) {
           this.setState({ loaded: true });
@@ -325,7 +326,7 @@ class Rendition extends Component {
         break;
       }
       case 'resized': {
-        let { size } = decoded;
+        const { size } = decoded;
         console.log('resized', size.width, size.height);
         break;
       }
