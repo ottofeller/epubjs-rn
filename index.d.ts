@@ -1,4 +1,4 @@
-declare module 'epubjs-rn' {
+declare module '@ottofeller/epubjs-rn' {
   import React from 'react';
 
   interface Props {
